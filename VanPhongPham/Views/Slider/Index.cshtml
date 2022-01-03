@@ -1,0 +1,53 @@
+﻿@model List<VanPhongPhamDTO.Entities.Slider>
+
+@{
+    ViewData["Title"] = "Quản lý slider";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h5 class="ml-3 mb-2">Quản lý slider</h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><a asp-action="Create"><i class="fas fa-plus-circle mr-2"></i>Thêm mới</a></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>chủ đề</th>
+                                <th>Mô tả</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><img src="@("/images/"+item.SLider_Images)" height="100" alt="" /></td>
+                                    <td>@item.Topic</td>
+                                    <td>
+                                        @item.Slider_Description
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.SLider_Id"><i class="fas fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.SLider_Id" onclick='return confirm("Bạn có chắc chắn muốn xóa không?");'><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>

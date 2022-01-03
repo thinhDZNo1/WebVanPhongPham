@@ -1,0 +1,152 @@
+﻿@using VanPhongPhamDTO.Entities
+@using VanPhongPhamDTO.EntityFramework
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    VanPhongPhamContext db = new VanPhongPhamContext();
+    List<CartItem> cartItems = (List<CartItem>)Context.Session.Get<List<CartItem>>("Cart");
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="">Giỏ hàng</a></li>
+    </ol>
+</nav>
+<div class="container" style="padding: 0 50px;">
+    <a href="/Home/Index" style="font-size: 16px;">&lt; Mua thêm nhiều sản phẩm </a>
+    <div class="content-cart">
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col col-10 p-1" style="text-align: right; font-size: 20px;">
+            <p>Tổng tiền: <span id="total"></span></p>
+
+        </div>
+        <div class="col-2">
+            @if (Context.Session.GetInt32("userid") == null)
+            {
+                <button class="btn btn-info btn-block" onclick="location.href='@Url.Action("Login", "Account", new { id=11 })'">Thanh Toán</button>
+            }
+            else
+            {
+                <button class="btn btn-info" onclick="location.href='@Url.Action("Order", "Cart")'">Thanh Toán</button>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        loadData();
+    })
+    function loadData() {
+
+        $.ajax({
+            url: "/Cart/ListCarts",//"/Admin/Supplier/List" để này ko cũng đc
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var data = '';
+                var total = 0;
+                var i = 0;
+                $.each(result, function (key, item) {
+                    data += '<div class="row mt-4" style="margin: 0 20px;">';
+                    data += '<div class="col-2">';
+                    data += '<img src="/images/' + item.products.product_Images + '" width="120" height="120" alt="">';
+                    data += '</div >';
+                    data += '<div class="col-6 pt-2">';
+                    data += '<h4>' + item.products.product_Name + '</h4>';
+                    data += '</div>';
+                    data += '<div class="col-2 pt-2">';
+                    if (item.products.newPrice == 0) {
+                        data += '<p style="font-size: 20px; font-weight: bold; color: darkcyan;">' + item.products.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) + '</p>';
+                        total += item.products.price * item.quantity;
+                    } else {
+                        data += '<p style="font-size: 20px; font-weight: bold; color: darkcyan;">' + item.products.newPrice.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) + '</p>';
+                        data += '<p style="font-size: 18px; text-decoration: line-through;">' + item.products.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }) + '</p>';
+                        total += item.products.newPrice * item.quantity;
+                    }
+                    data += '</div>';
+                    data += '<div class="col-2 pt-2">';
+                    data += '<div class="input-group">'
+                    data += '<div class="input-group-prepend">'
+                    data += '<button style="min-width: 2.5rem" class="btn btn-decrement btn-outline-secondary btn-minus" onclick="downnumber(' + i + ',' + item.products.product_Id + ')" type="button"><strong>−</strong></button>'
+                    data += ' </div>'
+                    data += '<input type="text" inputmode="decimal" style="text-align: center; width:50px;" class="form-control numberichUpDown sos' + i + '" value="' + item.quantity + '" placeholder="">'
+                    data += '<div class="input-group-append">'
+                    data += '<button style="min-width: 2.5rem" class="btn btn-increment btn-outline-secondary btn-plus" onclick="upnumber(' + i + ',' + item.products.product_Id + ')" type="button"><strong>+</strong></button>'
+                    data += '</div>'
+                    data += '</div>'
+                    data += '<button class="btn btn-outline-danger mt-3" style="width: 100%;" onclick="return deletefromcart(' + item.products.product_Id + ')">xóa</button>';
+                    data += '</div>';
+                    data += '</div>';
+                    data += '<hr>';
+                    i++;
+                });
+                if (data.length == 0) {
+                    $(".content-cart").html('<div class="text-center"><h4> Bạn chưa thêm sản phẩm nào vào giỏ hàng! </h4>  <a href="/Home/Index" style="font-size: 16px;">Quay lại mua hàng. </a></div>');
+                } else {
+                    $(".content-cart").html(data);
+                }
+                $("#total").html(total.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+
+            },
+            error: function (errorMessage) {
+                alert(errorMessage.responseText);
+            }
+        });
+    }
+    function upnumber(so, id) {
+        var up = parseInt($(".sos" + so).val());
+        $(".sos" + so).val(up + 1);
+        $.ajax({
+            url: "/Cart/AddToCart",
+            type: "POST",
+            data: { id: id },
+            success: function (result) {
+                $("#counts").html(result.total);
+                $("#total").html(result.summary.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+                //loadData();
+            }
+        })
+    }
+    function downnumber(so, id) {
+        var down = parseInt($(".sos" + so).val());
+        if (down > 1) {
+            $(".sos" + so).val(down - 1);
+            $.ajax({
+                url: "/Cart/ReduceProductCart",
+                type: "POST",
+                data: { id: id },
+                success: function (result) {
+                    $("#counts").html(result.total);
+                    $("#total").html(result.summary.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }));
+                    //loadData();
+                }
+            })
+        }
+    }
+    function deletefromcart(id) {
+        if (confirm("Bạn có chắc chắn muốn xóa?")) {
+            $.ajax({
+                url: "/Cart/RemoveCart",
+                type: "POST",
+                data: { id: id },
+                success: function (result) {
+                    confirm("Đã xóa 1 sản phẩm khỏi giỏ hàng!");
+                    $("#counts").html(result.total);
+                    loadData();
+                }
+            })
+        }
+    }
+    function linkLogin() {
+        $(".linklogin").attr("href", "/Account/Login/9");
+        $(".linkregister").attr("href", "/Account/Login/10");
+    }
+</script>

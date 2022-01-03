@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Http
+@using VanPhongPhamDTO.EntityFramework;
+@{
+
+    VanPhongPhamContext db = new VanPhongPhamContext();
+    var categories = db.Categories.ToList();
+    var cd = db.Category_Detail.ToList();
+    var menu = db.Menu.ToList();
+}
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top sticknav" id="nav_2">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+            @foreach (var m in menu)
+            {
+                @if (m.Status.Equals("Active"))
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@(m.Link)">
+                            <i class="fa fa-home" aria-hidden="true"></i> @m.Name
+                        </a>
+                    </li>
+                }
+                else if (m.Status.Equals("Dropdown"))
+                {
+                    <li class="nav-item dropdown menu-are">
+                        <a class="nav-link dropdown-toggle" id="maga-one" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@m.Name</a>
+                        <ul class="megamenu dropdown-menu mega-area mt-2 subm" aria-labelledby="mega-one">
+                            <li>
+                                <div class="row pl-3">
+                                    @foreach (var item in categories)
+                                    {
+                                        <div class="item col-sm-12 col-md-3 megathumnail">
+                                            <p>
+                                                <h4><a href="/Category/Category/@(item.Category_Id)" class="title">@item.Category_Name</a></h4>
+                                            </p>
+                                            @foreach (var c in cd)
+                                            {
+                                                @if (c.Category_Id == item.Category_Id)
+                                                {
+                                                    <p class="menuitem pl-2"><a href="/Category/CategoryDetail/@(c.CD_Id)">@c.CD_Name</a></p>
+                                                }
+                                            }
+                                        </div>
+                                    }
+
+
+
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">@m.Name</a>
+                    </li>
+                }
+            }
+
+            @if (Context.Session.GetInt32("userid") != null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Information">
+                        <img src="@("/images/"+ Context.Session.GetString("avatar"))" class="rounded-circle" height="25" width="25" alt="Alternate Text" />
+                        @Context.Session.GetString("username")
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Logout">
+                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link linklogin" href="">
+                        <i class="fas fa-user"></i> Đăng ký
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link linkregister" href="">
+                        <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+</nav>

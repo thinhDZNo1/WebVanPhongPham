@@ -1,0 +1,59 @@
+﻿@model IEnumerable<VanPhongPhamDTO.Entities.Promotion>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><a asp-action="Create"><i class="fas fa-plus-circle mr-2"></i>Thêm mới</a></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tên mã giảm giá</th>
+                                <th>Ảnh sự kiện</th>
+                                <th>miêu tả</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                                <th>chiết khấu</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Promotion_Name</td>
+                                <td><img src="@("/images/"+item.Images)" alt="Alternate Text" height="100" /></td>
+                                <td>@item.Description</td>
+                                <td>@item.Start_Day</td>
+                                <td>@item.End_Date</td>
+                                <td>@item.Discount</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Promotion_Id"><i class="fas fa-edit"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Promotion_Id" onclick='confirm("Bạn có chắc chắn muốn xóa không?");'><i class="far fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+

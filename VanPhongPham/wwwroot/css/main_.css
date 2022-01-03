@@ -1,0 +1,373 @@
+﻿.section-showcase .container {
+    padding-left: 0px;
+}
+
+.section-showcase .main-nav {
+    background-color: aquamarine;
+    width: 270px;
+    height: 500px;
+}
+
+    .section-showcase .main-nav h3 {
+        background-color: burlywood;
+        padding: 18px;
+        color: white;
+        border: 2px solid salmon;
+        text-transform: uppercase;
+        margin-bottom: 0;
+    }
+
+    .section-showcase .main-nav ul {
+        padding: 0;
+        list-style: none;
+    }
+
+        .section-showcase .main-nav ul .sub-arrow:after {
+            content: "\203A";
+            float: right;
+            margin-right: 20px;
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+
+.main-nav li:hover .sub-arrow:after {
+    content: "\2039";
+}
+
+.main-nav-ul li:hover ul {
+    display: block;
+    background-color: rgb(50, 194, 146);
+}
+
+.section-showcase .main-nav a {
+    text-decoration: none;
+    color: rgb(99, 71, 2);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    display: block;
+    padding: 8px 0 8px 30px;
+    border-bottom: 1px solid slategray;
+}
+
+    .section-showcase .main-nav a:hover {
+        background-color: seagreen;
+        color: white;
+    }
+
+.section-showcase .main-nav-ul ul {
+    display: none;
+}
+
+.section-services {
+    margin: 30px 0 30px 0;
+    margin-right: 15px;
+}
+
+    .section-services .services-item {
+        padding: 0;
+        /*background-color: aqua;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    height: 100px; */
+    }
+
+        .section-services .services-item .chon {
+            padding: 10px 0;
+            margin: 0 10px;
+            border-radius: 10px;
+            border: 1px solid rgb(233, 239, 253);
+            -webkit-box-shadow: 7px 6px 18px -4px rgba(59, 59, 59, 0.26);
+            -moz-box-shadow: 7px 6px 18px -4px rgba(59, 59, 59, 0.26);
+            box-shadow: 7px 6px 18px -4px rgba(59, 59, 59, 0.26);
+        }
+
+.chon .icon {
+    float: left;
+    font-size: 20px;
+    margin: 5px 15px 0 15px;
+}
+
+
+/* .section-top-sale .like {
+    font-size: 30px;
+    color: #816263;
+    font-weight: 500;
+    min-height: 50px;
+}
+
+.section-top-sale .like-name {
+    line-height: 40px;
+    display: block;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-decoration: none;
+} */
+
+
+/*style for menu second*/
+
+.section-menu-second {
+    padding-top: 30px;
+}
+
+    .section-menu-second .col {
+        padding: 0;
+    }
+
+.nbs-flexisel-inner {
+    padding-bottom: 30px;
+}
+
+.section-menu-second .navbar {
+    border-radius: 5px;
+    background-color: rgb(0, 162, 255) !important;
+    border-left: 2px solid slategray;
+    border-right: 2px solid slategray;
+    border-top: 2px solid rgb(66, 153, 240);
+    border-bottom: 2px solid rgb(66, 153, 240);
+}
+
+    .section-menu-second .navbar .nav-tabs li {
+        width: 190px;
+        border-right: 2px solid slategray;
+        min-width: 126.5px;
+        min-height: 41px;
+    }
+
+.section-menu-second .nav {
+    padding: 0px;
+    margin: 0px;
+}
+
+.section-menu-second .navbar .nav-tabs li:last-child {
+    border-right: none;
+}
+
+.section-menu-second .navbar .nav-tabs a {
+    margin: 0;
+    padding-bottom: 15px;
+    border-radius: 1px;
+}
+
+.section-new-product,
+.section-all-product {
+    margin-top: 0;
+}
+
+    .section-new-product .container,
+    .section-all-product .container {
+        background-color: rgb(128, 208, 211);
+    }
+
+        .section-new-product .container h3,
+        .section-all-product .container h3 {
+            padding-top: 50px;
+        }
+
+        .section-new-product .container .row,
+        .section-all-product .container .row {
+            padding-left: 5px;
+        }
+
+        .section-new-product .container a,
+        .section-all-product .container a {
+            text-decoration: none;
+        }
+
+.thumbnail {
+    padding-top: 10px;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+    .thumbnail .caption .proName {
+        padding: 20px 15px 0;
+        font-size: 12px;
+        line-height: 17px;
+        font-family: sans-serif;
+    }
+
+    .thumbnail .caption .proPrice {
+        padding-left: 15px;
+        font-size: 12px;
+        line-height: 17px;
+        font-family: sans-serif;
+        font-weight: 600;
+        bottom: 10px;
+    }
+
+    .thumbnail .caption .proOfPrice {
+        margin-right: 5px;
+        font-size: 14px;
+        font-family: sans-serif;
+        font-weight: 600;
+        color: gray;
+    }
+
+    .thumbnail .caption .proPriceDiscount {
+        margin-right: 5px;
+        font-size: 14px;
+        font-family: sans-serif;
+        font-weight: 600;
+        color: deeppink;
+    }
+
+    .thumbnail .caption .inew {
+        text-transform: uppercase;
+        color: #fff;
+        right: 10px;
+        position: absolute;
+        width: 90px;
+        height: 50px;
+        top: 0px;
+        padding-top: 20px;
+    }
+
+
+/* .thumbnail img:hover {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+} */
+
+.images-products {
+    padding-left: 20px;
+    height: 120px;
+    display: block;
+    float: left;
+}
+
+.product-name {
+    padding-top: 30px;
+    font-size: 15px;
+    width: 250px;
+    float: left;
+}
+
+.price {
+    height: 120px !important;
+    margin-right: 20px;
+}
+
+.products hr {
+    margin: 0px;
+}
+
+.product-price {
+    padding-top: 20px;
+    font-size: 20px;
+    color: rgb(253, 19, 19);
+}
+
+.thumbnail {
+    position: relative;
+    overflow: hidden;
+    padding: 10px 10px 0;
+    background-color: #fff;
+}
+
+    .thumbnail a img {
+        width: 200px;
+        height: 260px;
+        transition: all 0.5s;
+    }
+
+    .thumbnail a {
+        padding-left: 10px;
+        display: block;
+    }
+
+    .thumbnail:hover a img {
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+        -webkit-transform-origin: center top;
+        -moz-transform-origin: center top;
+        -ms-transform-origin: center top;
+        -o-transform-origin: center top;
+        transform-origin: center top;
+        transition: all 0.5s;
+    }
+
+
+.show_button:hover .chon-mua {
+    bottom: 0;
+}
+
+.thumbnail:hover {
+    -webkit-box-shadow: 0px 15px 23px 1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 15px 23px 1px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 15px 23px 1px rgba(0, 0, 0, 0.75);
+}
+
+.loadMore {
+    margin-bottom: 20px;
+}
+
+.chon-mua {
+    padding: 10px 10px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -50%;
+    -webkit-transition: all 0.45s ease;
+    -moz-transition: all 0.45s ease;
+    -ms-transition: all 0.45s ease;
+    -o-transition: all 0.45s ease;
+    transition: all 0.45s ease;
+    background-color: white;
+}
+
+
+/* .pagination {
+    margin-left: 80%;
+    padding-bottom: 20px;
+} */
+
+
+/* @media (max-width:992px) {
+    .pagination {
+        margin-left: 200px;
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width:786px) {
+    .pagination {
+        margin-left: 120px;
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width:576px) {
+    .pagination {
+        margin-left: 60px;
+        padding-bottom: 30px;
+    }
+} */
+
+.section-menu-second .container .nav {
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 10px 10px 0 0;
+}
+
+    .section-menu-second .container .nav .nav-item .nav-link:hover,
+    .section-menu-second .container .nav .nav-item .nav-link:focus,
+    .section-menu-second .container .nav .nav-item .nav-link:active,
+    .section-menu-second .container .nav .nav-item .nav-link:visited {
+        background-color: rgb(108, 208, 211) !important;
+    }
+
+.content {
+    -webkit-box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, 0.39);
+    -moz-box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, 0.39);
+    box-shadow: 0px 0px 21px -3px rgba(0, 0, 0, 0.39);
+}

@@ -1,0 +1,427 @@
+﻿@using VanPhongPhamDTO.EntityFramework
+@using VanPhongPhamDTO.Entities 
+@using Microsoft.AspNetCore.Http
+@{
+    VanPhongPhamContext db = new VanPhongPhamContext();
+    int so = 0;
+    if (Context.Session.Get<List<CartItem>>("Cart")!= null)
+    {
+        List<CartItem> cart = (List<CartItem>)Context.Session.Get<List<CartItem>>("Cart");
+        foreach (var item in cart)
+        {
+            so += item.Quantity;
+        }
+    }
+    else
+    {
+        so = 0;
+    }
+    List<Categories> categories = db.Categories.ToList();
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.2-web/css/all.min.css">
+    <link href="~/css/headerv2.css" rel="stylesheet" />
+    <link href="~/css/main_.css" rel="stylesheet" />
+    <link href="~/css/footer.css" rel="stylesheet" />
+    @*<link href="~/scss/new.css" rel="stylesheet" />*@
+    <link href="~/css/detailProducts_.css" rel="stylesheet" />
+    <link href="~/css/list.css" rel="stylesheet" />
+    <link href="~/admin/login/LoginStyle.css" rel="stylesheet" />
+    <link href="~/css/cart.css" rel="stylesheet" />
+    <link href="~/css/hotproduct_flesisel.css" rel="stylesheet" />
+    <link href="~/paginate/jquery.paginate.css" rel="stylesheet" />
+    <link href="~/css/profile.css" rel="stylesheet" />
+    <link href="~/css/areacss.css" rel="stylesheet" />
+
+    <link href="~/font/Ruda-VariableFont_wght.ttf" rel="stylesheet">
+    <style>
+        .showmore-button {
+            cursor: pointer;
+            background-color: #4169e1;
+            color: white;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 7px 5px 5px 5px;
+            margin-top: 5px;
+        }
+        .gian li {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="main-header">
+            <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+                <div class="container-fluid">
+                    <a class="navbar-branch pl-2" id="logo" href="/Home/Index">
+                        <span>
+                            <img src="/images/logo.png" height="50">
+                        </span> <b class="pt-2">Little Dog</b>
+                    </a>
+                    <div>
+                        <form action="/Home/Search" method="post" class="form-inline ml-3" style="width:350px; float: left;">
+                            <div class="mr-4 pl-3 bg-light rounded rounded-pill shadow-sm" style="width:90%">
+                                <div class="input-group">
+                                    <input type="search" placeholder="Nhập từ bạn cần tìm?" id="keyword" name="keyword" aria-describedby="button-addon1" class="form-control border-0 bg-light" style="border:0px solid">
+                                    <div class="input-group-append">
+                                        <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div style="float: left; padding-top: 5px;">
+                            @*@if (Context.Session.GetInt32("userid") == null)
+                                {
+                                    <a href="/Account/Login/2" style="font-size: 20px; ">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true">(@cart)</i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="/Cart/Cart/@(Context.Session.GetInt32("userid"))" style="font-size: 20px; ">
+                                        <i class="fa fa-shopping-cart" aria-hidden="true" >(<span id="counts">@cart</span>)</i>
+                                    </a>
+                                }*@
+                            <a href="/Cart/ShoppingCart/@(Context.Session.GetInt32("userid"))" style="font-size: 20px; ">
+                                <i class="fa fa-shopping-cart" aria-hidden="true">(<span id="counts">@so</span>)</i>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </nav>
+            <partial name="_NavBar" />
+        </div>
+
+        @RenderBody()
+
+        <hr class="my-5">
+        <footer>
+            <div class="container container-fluid">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                <h3> Liên hệ với chúng tôi</h3>
+                                <ul class="gian">
+                                    <li><a href="">Hotline & trực tuyến 24/7</a></li>
+                                    <li><a href="">Trung tâm hỗ trợ</a></li>
+                                    <li><a href="">Hướng dẫn đặt hàng</a></li>
+                                    <li><a href="">Giao hàng và nhận hàng</a></li>
+                                    <li><a href="">Hướng dẫn đổi trả</a></li>
+                                </ul>
+
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                <h3> Về chúng tôi</h3>
+                                <ul class="gian">
+                                    <li><a href="">Shop bán đồ văn phòng phẩm</a></li>
+                                    <li><a href="">Tuyển dụng</a></li>
+                                    <li><a href="">Điều khoản dịch vụ</a></li>
+                                    <li><a href="">Chính sách bảo mật</a></li>
+                                    <li><a href="">Quy chế hoạt động</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                <h3> Danh mục</h3>
+                                <ul class="gian">
+                                    @foreach (Categories item in categories)
+                                    {
+                                        <li><a href="/Categories/Category/@item.Category_Id">@item.Category_Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                            <div class=" col-12">
+                                <p class="mt-4 mb-2"><b>Tìm chúng tôi tại:</b></p>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3726.1295021904025!2d105.7565695142439!3d20.947313895931213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452eaa9c461c3%3A0x2a3e1c421f299adc!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyDEkOG6oWkgTmFt!5e0!3m2!1svi!2s!4v1625840131281!5m2!1svi!2s" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                        <img id="logo_ft" src="/images/logo.png" class="ml-2 pb-0" alt="">
+                        <a href=""><b>Little Dog</b></a>
+                        <ul>
+                            <li><span id="company">Công ty TNHH đầu tư & thương mại Đức Thịnh</span></li>
+                            <li><span>VPGD & Bán hàng: Làng Kim Quan Sơn, Hà Ngọc, Hà Trung, Thanh Hóa</span></li>
+                            <li><span>ĐT: 0857723345</span></li>
+                            <li><span>Email: thinhtran098o@gmail.com</span></li>
+                            <li><span>Trụ sở: Làng Kim Quan Sơn, Hà Ngọc, Hà Trung, Thanh Hóa</span></li>
+                        </ul>
+                        <p class="mt-2" id="contacts">Theo dõi chúng tôi tại:</p>
+                        <div class="social padding">
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </footer>
+        <div class="section-pay-other">
+            <div class="container">
+                <div class="row">
+                    <div id="pay" class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                        <p>Cách thức thanh toán</p>
+                        <span>Tiền mặt</span>
+                        <img src="/images/visa_PNG3.png" alt="">
+                        <img src="/images/logo-momo.jpg" alt="">
+                        <img src="/images/unnamed.png" alt="">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 chungNhan">
+                        <span>Chứng nhận SGD TMDT </span>
+                        <img src="/images/unnamed (1).png" alt="">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 chungNhan">
+                        <span>Chứng nhận website bảo mật</span>
+                        <img src="/images/symantec_ssl.png" height="50" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row copyright">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <hr>
+                <p><i class="fa fa-copyright" aria-hidden="true"> 2021 Copyright by Đức Thịnh</i></p>
+            </div>
+        </div>
+    </div>
+    <script src="~/js/popper.js"></script>
+    <script src="~/admin/plugins/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/js/flexisel.js"></script>*@
+    <script src="~/js/jquery.flexisel.js"></script>
+    <script src="~/js/code.js"></script>
+    <script src="~/bootstrap-input-spinner-master/src/bootstrap-input-spinner.js"></script>
+    <script src="~/zoom-master/jquery.zoom.js"></script>
+    <script src="~/admin/login/loginScript.js"></script>
+    <script src="~/paginate/jquery.paginates.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#sliderHotProducts").flexisel({
+                visibleItems: 4,
+                itemsToScroll: 3,
+                animationSpeed: 1000,
+                infinite: true,
+                navigationTargetSelector: null,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                autoPlaySpeed: 3000,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 1,
+                        itemsToScroll: 1
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 2,
+                        itemsToScroll: 2
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3,
+                        itemsToScroll: 3
+                    }
+                }
+            })
+            $("#flexiselBrand").flexisel({
+                visibleItems: 4,
+                itemsToScroll: 3,
+                animationSpeed: 1000,
+                infinite: true,
+                navigationTargetSelector: null,
+                autoPlay: true,
+                autoPlaySpeed: 3000,
+                pauseOnHover: true,
+                autoPlaySpeed: 3000,
+                responsiveBreakpoints: {
+                    portrait: {
+                        changePoint: 480,
+                        visibleItems: 1,
+                        itemsToScroll: 1
+                    },
+                    landscape: {
+                        changePoint: 640,
+                        visibleItems: 2,
+                        itemsToScroll: 2
+                    },
+                    tablet: {
+                        changePoint: 768,
+                        visibleItems: 3,
+                        itemsToScroll: 3
+                    }
+                }
+            });
+            /*hien();*/
+            for (let i = 0; i < 100; i++) {
+                $(".show_more" + String(i)).css("display", "none");
+                $(".show_more" + String(i)).slice(0, 8).show(); //show 4 div
+                $(".loadMore" + String(i)).on("click", function () {
+
+                    //var a = ('.show_button:not([style*="display: none"])').length;
+                    $(".show_more" + String(i) + ":hidden").slice(0, 4).slideDown(); //showing hidden div
+                    if ($('.show_more' + String(i) + ':hidden').length == 0) {
+                        $(".loadMore" + String(i)).remove();
+                    }
+                })
+                $(".show_more_" + String(i)).css("display", "none");
+                $(".show_more_" + String(i)).slice(0, 8).show(); //show 4 div
+                $(".loadMore_" + String(i)).on("click", function () {
+
+                    //var a = ('.show_button:not([style*="display: none"])').length;
+                    $(".show_more_" + String(i) + ":hidden").slice(0, 4).slideDown(); //showing hidden div
+                    if ($('.show_more_' + String(i) + ':hidden').length == 0) {
+                        $(".loadMore_" + String(i)).remove();
+                    }
+                })
+            }
+            $(function () {
+                $('.zoom-image').each(function () {
+                    var originalImagePath = $(this).find('img').data('original-image');
+                    $(this).zoom({
+                        url: originalImagePath,
+                        magnify: 1
+                    });
+                });
+            });
+            var pos = $(".sticknav").position();
+            //Lấy vị trí hiện tại của menu cách top
+            $(window).scroll(function () {
+                var posScroll = $(document).scrollTop();
+                if (parseInt(posScroll) > parseInt(pos.top)) {
+                    $(".sticknav").addClass("fixed");
+                } else {
+                    $(".sticknav").removeClass("fixed");
+                }
+            })
+            $(".tro").hover(function () {
+                $(this).find("ul:first").slideDown(200);
+            }, function () {
+                $(this).find("ul:first").hide(200);
+            });
+            //$(function () {
+            //    var PlaceHolderElement = $("#PlaceHolderHere");
+            //    $('button[data-toggle="ajax-modal"]').click(function (event) {
+            //        var url = $(this).data('url')
+            //    })
+            //})
+            //if ($("#ChooseAll").is(":checked")) {
+            //    for (var i = 0; i < 1000; i++) {
+            //        $(".check-band-"+String(i)).prop("checked", true);
+            //    }
+            //} else {
+            //    for (var i = 0; i < 1000; i++) {
+            //        $(".check-band-" + String(i)).prop("checked", false);
+            //    }
+            //}
+            //for (var i = 0; i < 1000; i++) {
+            //    $(".check-band-" + String(i)).change(function () {
+            //        if ($(".check-band-" + String(i)).is(':checked')) {
+            //            foreach
+            //        }
+            //    })
+            //}
+
+            $("#ChooseAll").change(function () {
+                if ($("#ChooseAll").is(':checked')) {
+                    for (let i = 0; i < 100; i++) {
+                        $(".check-band-" + String(i)).prop('checked', true);
+                        for (var j = 0; j < 100; j++) {
+                            $(".check-product-" + String(i) + String(j)).prop('checked', true);
+                        }
+                    }
+                }
+                else {
+                    for (let i = 0; i < 100; i++) {
+                        $(".check-band-" + String(i)).prop('checked', false);
+                        for (var j = 0; j < 100; j++) {
+                            $(".check-product-" + String(i) + String(j)).prop('checked', false);
+                        }
+                    }
+                }
+            });
+            for (let i = 0; i < 100; i++) {
+                $(".check-band-" + String(i)).change(function () {
+                    if ($('.check-band-' + String(i)).is(':checked')) {
+                        for (var j = 0; j < 100; j++) {
+                            $(".check-product-" + String(i) + String(j)).prop('checked', true);
+                        }
+                    } else {
+                        for (var j = 0; j < 100; j++) {
+                            $(".check-product-" + String(i) + String(j)).prop('checked', false);
+                        }
+                    }
+                })
+            }
+            var dem = 0;
+            for (let i = 0; i < 100; i++) {
+                for (let j = 0; j < 100; j++) {
+                    if ($(".check-product-" + String(i) + String(j)).is(':checked')) {
+                        dem += 1;
+                    }
+                }
+            }
+            $('#exam').paginate({
+                perPage: 12,
+                scope: $('.pag'), // targets all div elements
+            });
+            linkLogin();
+
+        });
+        function AddToCart(id) {
+            $.ajax({
+                url: "/Cart/AddToCart",
+                type: "POST",
+                data: { id: id },
+                success: function (result) {
+                    confirm("Đã thêm một sản phẩm vào giỏ hàng!");
+                    $("#counts").html(result.total);
+                }
+            })
+        }
+        function AddProductToCart(id, quan) {
+            if (quan >= 1) {
+                $.ajax({
+                    url: "/Cart/AddProductToCart",
+                    type: "POST",
+                    data: { id: id, quan: quan },
+                    success: function (result) {
+                        $("#counts").html(result.total);
+                    }
+                })
+            } else {
+                alert("Bạn cần chọn số lượng sản phẩm trước khi thêm vào giỏ!!!");
+            }
+        }
+        function GoToProductToCart(id, quan) {
+            if (quan >= 1) {
+                $.ajax({
+                    url: "/Cart/AddProductToCart",
+                    type: "POST",
+                    data: { id: id, quan: quan },
+                    success: function (result) {
+                        window.location = "/Cart/ShoppingCart";
+                    }
+                })
+            } else {
+                alert("Bạn cần chọn số lượng sản phẩm trước khi thêm vào giỏ!!!");
+            }
+        }
+    </script>
+</body>
+</html>

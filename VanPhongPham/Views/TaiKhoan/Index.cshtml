@@ -1,0 +1,83 @@
+﻿@model List<VanPhongPhamDTO.Entities.Users>
+
+@{
+    ViewData["Title"] = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><a asp-action="Create"><i class="fas fa-plus-circle mr-2"></i>Thêm mới</a></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body" style="overflow-x: auto">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>Ảnh đại diện</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày sinh</th>
+                                <th>Giới tính</th>
+                                <th>Email</th>
+                                <th>Số điện thoại</th>
+                                <th>Tên tài khoản</th>
+                                <th>Mật khẩu</th>
+                                <th>Loại tài khoản</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(item.First_Name +" "+ item.Last_Name)</td>
+                                    <td><img src="@("/images/"+item.Avatar)" height="100" /></td>
+                                    <td>
+                                        @item.Address
+                                    </td>
+                                    <td>@item.BirthDay</td>
+                                    <td>@item.Sex</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.PhoneNumber</td>
+                                    <td>@item.UserName</td>
+                                    <td>@item.Password</td>
+                                    <td>
+                                        @if (item.isActive == 1)
+                                        {
+                                            <span>Quản trị</span>
+                                        }
+                                        else if (item.isActive == 2)
+                                        {
+
+
+                                            <span>Nhân viên</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Khách hàng</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.User_Id"><i class="fas fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.User_Id" onclick='confirm("Bạn có chắc chắn muốn xóa không?");'><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+

@@ -1,0 +1,158 @@
+﻿@model VanPhongPhamDTO.Entities.Users
+@{
+    ViewData["Title"] = "Đăng nhập | Đăng ký";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="container containerlg">
+    <section id="formHolder">
+
+        <div class="row">
+
+            <!-- Brand Box -->
+            <div class="col-sm-6 brand">
+                <a href="#" class="logo">Little Dog <span>.</span></a>
+
+                <div class="heading">
+                    <img src="/images/logo(1).png" style="color:white;" alt="Alternate Text" />
+                    <p>Văn phòng phẩm Đức Thịnh</p>
+                </div>
+
+                <div class="success-msg">
+                    <p>Great! You are one of our members now</p>
+                    <a href="#" class="profile">Your Profile</a>
+                </div>
+            </div>
+
+
+            <!-- Form Box -->
+            <div class="col-sm-6 form">
+                <!-- Signup Form -->
+                <div class="signup form-peice @(ViewBag.register)">
+                    
+                    <form method="post" class="signup-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="redirect" id="redirect" value="@(ViewBag.path)" />
+                        <input type="hidden" asp-for="Avatar" id="avatar" value="avatar_begin.png" />
+                        <input type="hidden" asp-for="isActive" id="isActive" value="3" />
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <label for="firstname">Họ</label>
+                                <input type="text" asp-for="First_Name" id="firstname" class="firstname" />
+                                <span class="error"></span>
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="lastname">Tên</label>
+                                <input type="text" asp-for="Last_Name" id="lastname" class="lastname" />
+                                <span class="error"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">Tên đăng nhập</label>
+                            <input type="text" asp-for="UserName" id="username" class="username" />
+                            <span class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <input type="text" asp-for="Address" id="address" class="address" />
+                            <span class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Ngày sinh</label>
+                            <input type="date" asp-for="BirthDay" id="birth" class="birthday" />
+                            <span class="error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại<small></small></label>
+                            <input type="text" asp-for="PhoneNumber" id="phone" class="phone" />
+                            <span class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" name="password" id="password" class="pass" />
+                            <span class="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="passwordCon">Xác nhận mật khẩu</label>
+                            <input type="password" asp-for="Password" id="passwordCon" class="passConfirm" />
+                            <span class="error"></span>
+                        </div>
+                        <div class="errorre">
+
+                        </div>
+                        <div class="CTA">
+                            <input type="submit" value="Đăng ký" id="submit" onclick=" return Add();">
+
+                            <a href="#" class="switch">Tôi đã có tài khoản</a>
+                        </div>
+                    </form>
+                </div><!-- End Signup Form -->
+                <!-- Login Form -->
+                <div class="login form-peice @(ViewBag.login)">
+                    <form class="login-form" asp-action="Login" method="post">
+                        <input type="hidden" name="redirect" value="@(ViewBag.path)" />
+                        <div class="form-group">
+                            <label for="username">Tên đăng nhập</label>
+                            <input type="text" name="username" id="username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mật khẩu</label>
+                            <input type="password" name="password" id="password" required/>
+                        </div>
+                        @Html.Raw(ViewBag.error)
+                        <div class="CTA">
+                            <input type="submit" value="Đăng nhập">
+                            <a href="#" class="switch">Tôi là người mới</a>
+                        </div>
+                    </form>
+                </div><!-- End Login Form -->
+            </div>
+        </div>
+
+    </section>
+
+
+    <footer>
+    </footer>
+
+</div>
+<script>
+    function linkLogin() {
+        $(".linklogin").attr("href", "/Account/Login/1");
+        $(".linkregister").attr("href", "/Account/Login/2");
+    }
+    function Add() {
+        //Lấy giá trị trong textbox
+        var obj = {
+            First_Name: $("#firstname").val(),
+            Last_Name: $("#lastname").val(),
+            Avatar: $("#avatar").val(),
+            isActive: $("#isActive").val(),
+            Phone: $("#phone").val(),
+            Address: $("#address").val(),
+            UserName: $("#username").val(),
+            Birthday: $("#birthday").val(),
+            Password: $("#passwordCon").val()
+        };
+        $.ajax({
+            url: "/Account/Registers",
+            data: JSON.stringify(obj),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            type: "POST",
+            success: function (result) {
+                if (result.flag == true)
+                    $(".errorre").html("<p class=\"alert alert-danger\">Tài khoản đã tồn tại!</p>");                
+                else
+                   window.location = $("#redirect").val();
+            },
+            error: function (errorMessage) {
+            }
+        });
+    }
+</script>
+

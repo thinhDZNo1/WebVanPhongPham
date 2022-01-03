@@ -1,0 +1,119 @@
+﻿@model VanPhongPhamDTO.Entities.Products
+
+@{
+    ViewData["Title"] = "Sửa thông tin sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+<div>
+    <a asp-action="Index">Quay lại quản lý</a>
+</div>
+<div class="container-fluid mb-3 mt-3">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Sửa thông tin sản phẩm</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Product_Id" /><input type="hidden" asp-for="Product_Images" />
+                <input type="hidden" asp-for="Description_Images" />
+                <div class="form-group">
+                    <label asp-for="Product_Name" class="control-label"></label>
+                    <input asp-for="Product_Name" class="form-control" />
+                    <span asp-validation-for="Product_Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Product_Images" class="control-label"></label>
+                    <div class="mt-2 mb-2">
+                        <img id="blah" src="@("/images/"+Model.Product_Images)" alt="your image" height="200" class="d-block mx-auto" />
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" asp-for="ImageFile" accept="image/*" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        <label class="custom-file-label" for="customFile" id="blah">@Model.Product_Images</label>
+                    </div>
+                    <span asp-validation-for="Product_Images" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea class="summernote" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Producer_Id" class="control-label"></label>
+                    <select asp-for="Producer_Id" class="form-control" asp-items="ViewBag.Producer_Id"></select>
+                    <span asp-validation-for="Producer_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Size" class="control-label"></label>
+                    <input asp-for="Size" class="form-control" />
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Unit" class="control-label"></label>
+                    <input asp-for="Unit" class="form-control" />
+                    <span asp-validation-for="Unit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CD_Id" class="control-label"></label>
+                    <select asp-for="CD_Id" class="form-control" asp-items="ViewBag.CD_Id"></select>
+                    <span asp-validation-for="CD_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Stock" class="control-label"></label>
+                    <input asp-for="Stock" class="form-control" />
+                    <span asp-validation-for="Stock" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Detail_Description" class="control-label"></label>
+                    <textarea class="summernote" asp-for="Detail_Description"></textarea>
+                    <span asp-validation-for="Detail_Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description_Images" class="control-label"></label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="files" asp-for="ImageFile2" onchange="loadFile(event)" multiple />
+                        <label class="custom-file-label" for="files" id="blah">@Model.Description_Images</label>
+                    </div>
+                    <span asp-validation-for="Description_Images" class="text-danger"></span>
+
+                    @if (ViewBag.MultiImage != null)
+                    {
+                        <div style="width:95%;" class="d-flex m-2 border showimage">
+                            @foreach (string item in ViewBag.MultiImage)
+                            {
+                                @if (item.Length > 1)
+                                {
+                                    <img src="@("/images/"+item)" height='100' class='m-2' />
+                                }
+                            }
+                        </div>
+                    }
+                    <div id="dynamicImage" style="width:95%; overflow-x:auto;" class="d-flex m-2 border"></div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+
+
+

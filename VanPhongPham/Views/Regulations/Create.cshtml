@@ -1,0 +1,43 @@
+﻿@model VanPhongPhamDTO.Entities.Regulations
+
+@{
+    ViewData["Title"] = "Thêm mới điều khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <a asp-action="Index">Quay lại trang quản lý</a>
+</div>
+<div class="container-fluid mb-3 mt-3">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Thêm mới điều khoản</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea class="summernote" asp-for="Content"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="User_Id" class="control-label"></label>
+                    <select asp-for="User_Id" class="form-control" asp-items="ViewBag.User_Id"></select>
+                    <span asp-validation-for="User_Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+

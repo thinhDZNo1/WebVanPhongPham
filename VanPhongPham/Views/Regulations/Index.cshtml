@@ -1,0 +1,53 @@
+﻿@model List<VanPhongPhamDTO.Entities.Regulations>
+
+@{
+    ViewData["Title"] = "Quản lý điều khoản dịch vụ";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h5 class="ml-3 mb-2">Quản lý điều khoản trang web</h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><a asp-action="Create"><i class="fas fa-plus-circle mr-2"></i>Thêm mới</a></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Quy định</th>
+                                <th>Nội dung</th>
+                                <th>Người soạn</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Content</td>
+                                    <td>@item.Users.First_Name @item.Users.Last_Name</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" onclick='confirm("Bạn có chắc chắn muốn xóa không?");'><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>

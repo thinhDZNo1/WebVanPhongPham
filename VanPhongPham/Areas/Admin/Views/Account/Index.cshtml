@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h4>Thông tin tài khoản</h4>
+    <div class="row">
+        <div class="col col-4">
+        </div>
+        <div class=" col col-8" >
+            <p id="name"></p>
+            <p id="address"></p>
+            <p id="birthDay"></p>
+            <p id="sex"></p>
+            <p id="email"></p>
+            <p id="phone"></p>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+<script type="text/javascript">
+    function loadInfo() {
+        $.ajax({
+            url: "Admin/Account/Info",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                $.each(result, function (key, item) {
+                    if (item.user_Id == @ViewBag.userId) {
+                        $('#name').html(item.first_Name + item.last_Name);
+                        $('#address').val('aaa'+item.address);
+                        $('#birthDay').text(item.birthDay);
+                        $('#sex').html(item.Sex);
+                        $('#email').html(item.email);
+                        $('#phone').html(item.phone);
+                        //data += '<p>' + item.first_Name + item.last_Name + '</p>';
+                        //data += '<p>' + item.address + '</p>';
+                        //data += '<p>' + item.birthDay + '</p>';
+                        //data += '<p>' + item.sex + '</p>';
+                        //data += '<p>' + item.email + '</p>';
+                        //data += '<p>' + item.phone + '</p>';
+                    }
+                })
+            },
+            error: function (errorMessage) {
+                alert(errorMessage.responseText);
+            }
+        })
+    }
+</script>

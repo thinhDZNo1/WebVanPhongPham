@@ -1,0 +1,55 @@
+﻿@model VanPhongPhamDTO.Entities.Producer
+
+@{
+    ViewData["Title"] = "Thêm mới nhãn hiệu";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+    <a asp-action="Index">Quay lại trang chủ</a>
+</div>
+<div class="container-fluid mb-3 mt-3">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Thêm mới nhãn hiệu</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Producer_Name" class="control-label"></label>
+                    <input asp-for="Producer_Name" class="form-control" />
+                    <span asp-validation-for="Producer_Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Producer_Images" class="control-label"></label>
+                    <div class="mt-2 mb-2">
+                        <img id="blah" src="/images/logo.png" alt="your image" height="200" class="d-block mx-auto" />
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" asp-for="ImageFile" accept="image/*" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        <label class="custom-file-label" for="customFile" id="blah">Chọn ảnh</label>
+                    </div>
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Producer_Description" class="control-label"></label>
+                    @*<input asp-for="Producer_Description" class="form-control" />*@
+                    <textarea class="summernote" asp-for="Producer_Description"></textarea>
+                    <span asp-validation-for="Producer_Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Origin" class="control-label"></label>
+                    <input asp-for="Origin" class="form-control" />
+                    <span asp-validation-for="Origin" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>

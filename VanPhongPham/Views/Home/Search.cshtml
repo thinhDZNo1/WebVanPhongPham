@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "Tìm kiếm cho : " + ViewBag.keyWord;
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="">Tìm kiếm</a></li>
+    </ol>
+</nav>
+<p class="ml-4"><b>Từ khóa tìm kiếm: @ViewBag.key. Có @ViewBag.count kết quả</b></p>
+<div class="section-new-product">
+    <div class="container" style="background-color: #e8e8e8;">
+        <h3 class="text-center"></h3>
+
+        @if (ViewBag.products != null)
+        {
+
+            @if (ViewBag.count > 0)
+            {
+                <div class="row" id="exam">
+                    @foreach (var item in ViewBag.products)
+                    {
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 pag show_button">
+                            <div class="thumbnail">
+                                <a href="@Url.Action("ProductDetail", "Home", new { id =  item.Product_Id })"> <img src="@("/images/"+item.Product_Images)" alt=""></a>
+                                <div class="chon-mua">
+                                    <button class="btn btn-info btn-block" onclick="location.href='@Url.Action("ProductDetail", "Home", new { id =  item.Product_Id }) '">Xem chi tiết</button>
+                                    <button class="btn btn-info btn-block" onclick="AddToCart('@(item.Product_Id)')">Thêm giỏ hàng</button>
+                                </div>
+                                <div class="caption">
+                                    <div class="proName">@item.Product_Name</div>
+                                    <div class="proPrice">
+                                        <span class="proOfPrice">2.000.000</span>
+                                        <span class="proPriceDiscount">1.800.000</span>
+                                    </div>
+                                    @foreach (var p in ViewBag.listNew)
+                                    {
+                                        @if (item.Product_Id == p.Product_Id)
+                                        {
+                                            <img src="/images/new2.png" alt="" class="inew">
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="d-flex pb-4" style=" width: 100%"><h4 class="mx-auto">Không tìm thấy kết quả nào tương ứng!</h4></div>
+            }
+        }
+        else
+        {
+            <div class="d-flex pb-4" style=" width: 100%"><h4 class="mx-auto">Vui lòng nhập từ khóa!</h4></div>
+
+        }
+    </div>
+</div>
+<script>
+    function linkLogin() {
+        $(".linklogin").attr("href", "/Account/Login/7");
+        $(".linkregister").attr("href", "/Account/Login/8");
+    }
+</script>
+

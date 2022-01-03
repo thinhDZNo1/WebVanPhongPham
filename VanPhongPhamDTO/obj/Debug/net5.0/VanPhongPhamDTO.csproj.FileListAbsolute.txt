@@ -1,0 +1,30 @@
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.deps.json
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.runtimeconfig.json
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.runtimeconfig.dev.json
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.dll
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\ref\VanPhongPhamDTO.dll
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.pdb
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.AssemblyInfoInputs.cache
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.AssemblyInfo.cs
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.csproj.CoreCompileInputs.cache
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.dll
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\ref\VanPhongPhamDTO.dll
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.pdb
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.genruntimeconfig.cache
+D:\ASP.Net\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.csproj.AssemblyReference.cache
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.deps.json
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.runtimeconfig.json
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.runtimeconfig.dev.json
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.dll
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\ref\VanPhongPhamDTO.dll
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\bin\Debug\net5.0\VanPhongPhamDTO.pdb
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.csproj.AssemblyReference.cache
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.AssemblyInfoInputs.cache
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.AssemblyInfo.cs
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.csproj.CoreCompileInputs.cache
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.dll
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\ref\VanPhongPhamDTO.dll
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.pdb
+C:\Users\tranp\OneDrive\Tài liệu\DoAnNet\VanPhongPhamDTO\obj\Debug\net5.0\VanPhongPhamDTO.genruntimeconfig.cache

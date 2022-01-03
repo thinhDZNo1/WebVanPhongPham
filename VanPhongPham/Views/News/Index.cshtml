@@ -1,0 +1,103 @@
+﻿@model IEnumerable<VanPhongPhamDTO.Entities.News>
+
+@{
+    ViewData["Title"] = "Quản lý bài viết";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<h5 class="ml-3 mb-2">Quản lý bài viết</h5>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><a asp-action="Create"><i class="fas fa-plus-circle mr-2"></i>Thêm mới</a></h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tên bài viết</th>
+                                <th>Ảnh</th>
+                                <th>Miêu tả bài viết</th>
+                                <th>Mô tả</th>
+                                <th>Nội dung</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.New_Name</td>
+                                    <td>
+                                        <img src="@("/images/"+item.Images)" alt="Alternate Text" height="100" />
+                                    </td>
+                                    <td>@Html.Raw(item.Description)</td>
+                                    <td>@Html.Raw(item.Content)</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.New_Id"><i class="fas fa-edit"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.New_Id" onclick='return confirm("Bạn có chắc chắn muốn xóa không?");'><i class="far fa-trash-alt"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.New_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Images)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.New_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Images)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.New_Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.New_Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

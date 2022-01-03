@@ -1,0 +1,49 @@
+﻿@model VanPhongPhamDTO.Entities.Slider
+
+@{
+    ViewData["Title"] = "Thêm mới slider";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+    <a asp-action="Index">Quay lại trang quản lý</a>
+</div>
+<div class="container-fluid mb-3 mt-3">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Thêm mới slider</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SLider_Images" class="control-label"></label>
+                    <div class="mt-2 mb-2">
+                        <img id="blah" src="/images/logo.png" alt="your image" height="200" class="d-block mx-auto" />
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" asp-for="ImageFile" accept="image/*" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                        <label class="custom-file-label" for="customFile" id="blah">Chọn ảnh</label>
+                    </div>
+                    <span asp-validation-for="SLider_Images" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic" class="control-label"></label>
+                    <input asp-for="Topic" class="form-control" />
+                    <span asp-validation-for="Topic" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Slider_Description" class="control-label"></label>
+                    <textarea class="summernote" asp-for="Slider_Description"></textarea>
+                    <span asp-validation-for="Slider_Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>

@@ -1,0 +1,120 @@
+﻿<div class="modal" id="login">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!--Modal header-->
+            <div class="modal-header">
+                <h4>Chào mừng bạn</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            @*Modal body*@
+            <div class="modal-body">
+                <div class="container containerlg">
+                    <section id="formHolder">
+
+                        <div class="row">
+
+                            <!-- Brand Box -->
+                            <div class="col-sm-6 brand">
+                                <a href="#" class="logo">Little Dog <span>.</span></a>
+
+                                <div class="heading">
+                                    <img src="/images/logo(1).png" style="color:white;" alt="Alternate Text" />
+                                    <p>Văn phòng phẩm Đức Thịnh</p>
+                                </div>
+
+                                <div class="success-msg">
+                                    <p>Great! You are one of our members now</p>
+                                    <a href="#" class="profile">Your Profile</a>
+                                </div>
+                            </div>
+
+
+                            <!-- Form Box -->
+                            <div class="col-sm-6 form">
+                                <!-- Signup Form -->
+                                <div class="signup form-peice switched">
+                                    <form class="signup-form" action="#" method="post">
+                                        <div class="row">
+                                            <div class="col-6 form-group">
+                                                <label for="firstname">Họ</label>
+                                                <input type="text" name="firstname" id="firstname" class="firstname">
+                                                <span class="error"></span>
+                                            </div>
+                                            <div class="col-6 form-group">
+                                                <label for="lastname">Tên</label>
+                                                <input type="text" name="lastname" id="lastname" class="lastname">
+                                                <span class="error"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="username">Tên đăng nhập</label>
+                                            <input type="text" name="username" id="username" class="username">
+                                            <span class="error"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Địa chỉ</label>
+                                            <input type="text" name="address" id="address" class="address">
+                                            <span class="error"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="phone">Số điện thoại<small></small></label>
+                                            <input type="text" name="phone" id="phone">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="password">Mật khẩu</label>
+                                            <input type="password" name="password" id="password" class="pass">
+                                            <span class="error"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="passwordCon">Xác nhận mật khẩu</label>
+                                            <input type="password" name="passwordCon" id="passwordCon" class="passConfirm">
+                                            <span class="error"></span>
+                                        </div>
+
+                                        <div class="CTA">
+                                            <input type="submit" value="Đăng ký" id="submit">
+                                            <a href="#" class="switch">Tôi đã có tài khoản</a>
+                                        </div>
+                                    </form>
+                                </div><!-- End Signup Form -->
+                                <!-- Login Form -->
+                                <div class="login form-peice">
+                                    <form class="login-form" asp-action="Login" method="post">
+                                        <div class="form-group">
+                                            <label for="username">Username</label>
+                                            <input type="text" name="username" id="username" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" name="password" id="password" required>
+                                        </div>
+                                        @Html.Raw(ViewBag.error)
+                                        <div class="CTA">
+                                            <input type="submit" value="Login">
+                                            <a href="#" class="switch">I'm New</a>
+                                        </div>
+                                    </form>
+                                </div><!-- End Login Form -->
+                            </div>
+                        </div>
+
+                    </section>
+
+
+                    <footer>
+                    </footer>
+
+                </div>
+            </div>
+            @*modal footer*@
+            <div class="modal-footer">
+                
+            </div>
+        </div>
+    </div>
+</div>

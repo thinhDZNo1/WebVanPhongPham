@@ -1,0 +1,235 @@
+﻿@using VanPhongPhamDTO.Entities
+@model Tuple<Products, Producer, List<Products>, List<Products>>
+@{
+    ViewData["Title"] = Model.Item1.Product_Name;
+    int i = 1;
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="/Home/ProductDetail/@(Model.Item1.Product_Id)">Sản phẩm</a></li>
+    </ol>
+</nav>
+<section class="product-slider-section">
+    <div class="container p-0">
+        <div id="productslider" class="carousel slide">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active zoom-image">
+                                    <img src="@("/images/"+ Model.Item1.Product_Images)" class="img-fluid" alt="">
+                                    @if ((int)Model.Item1.NewPrice != 0)
+                                    {
+                                        <span class="sale-span">Sale</span>
+                                    }
+                                </div>
+                                @if (ViewBag.MultiImage != null)
+                                {
+                                    @foreach (var item in ViewBag.MultiImage)
+                                    {
+                                        @if (item.Length > 0)
+                                        {
+                                            <div class="carousel-item zoom-image">
+                                                <img src="@("/images/" + item)" class="img-fluid" alt="">
+                                                @if ((int)Model.Item1.NewPrice != 0)
+                                                {
+                                                    <span class="sale-span">Sale</span>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <ul class="carousel-indicators position-static m-0 justify-content-start" style="overflow-x: auto;">
+                                <li data-target="#productslider" data-slide-to="0" class="active ">
+                                    <div class="data-slide-image">
+                                        <img src="@("/images/"+ Model.Item1.Product_Images)" class="img-fluid" alt="">
+                                    </div>
+                                </li>
+                                @if (ViewBag.MultiImage != null)
+                                {
+                                    @foreach (string item in ViewBag.MultiImage)
+                                    {
+
+
+                                        @if (item.Length > 0)
+                                        {
+                                            <li data-target="#productslider" data-slide-to="@(i)">
+                                                <div class="data-slide-image">
+                                                    <img src="@("/images/"+ item)" class="img-fluid" alt="">
+                                                </div>
+                                            </li>
+                                            i++;
+                                        }
+
+                                    }
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- <div class="col col-12">
+                            <img id=featured src="images/shoe2.jpg">
+
+                            <div id="slide-wrapper">
+                                <img id="slideLeft" class="arrow" src="images/arrow-left.png">
+
+                                <div id="slider">
+                                    <img class="thumbnail active" src="images/shoe1.jpg">
+                                    <img class="thumbnail" src="images/shoe2.jpg">
+                                    <img class="thumbnail" src="images/shoe3.jpg">
+
+                                    <img class="thumbnail" src="images/preset1.png">
+                                    <img class="thumbnail" src="images/preset2.jpg">
+                                    <img class="thumbnail" src="images/preset3.jpg">
+                                    <img class="thumbnail" src="images/preset4.jpg">
+                                </div>
+
+                                <img id="slideRight" class="arrow" src="images/arrow-right.png">
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <h3 class="product-names">@Model.Item1.Product_Name</h3>
+                    <p class="prices">
+                        @if (Model.Item1.NewPrice != 0)
+                        {
+                            <span class="old-price">@(String.Format("{0:0,0 vnđ}", (int)Model.Item1.Price))</span>
+                            <span class="sale-price">@(String.Format("{0:0,0 vnđ}", (int)Model.Item1.NewPrice))</span>
+                        }
+                        else
+                        {
+                            <span class="sale-price">@(String.Format("{0:0,0 vnđ}", (int)Model.Item1.Price))</span>
+                        }
+                    </p>
+                    <hr />
+                    <div id="demo2">
+                        @Html.Raw(Model.Item1.Description)
+                    </div>
+                    <hr />
+                    <p>Hãng sản xuất: @Model.Item2.Producer_Name</p>
+                    <p>Quốc gia: @Model.Item2.Origin</p>
+                    <p>Kích thước: @Model.Item1.Size</p>
+                    <p>Tình trạng: @Model.Item1.Status</p>
+                    <p>Đơn vị: @Model.Item1.Unit</p>
+                    <hr />
+                    <div class="d-flex">
+                        <label class="pt-2" for="">Số lượng</label>
+                        <div class="ml-3">
+                            <input class="numberichUpDown" type="number" value="0" min="0" max="100" step="1" />
+                        </div>
+                    </div>
+                    <div class="d-flex mt-3">
+                        <button class="btn btn-success" onclick="GoToProductToCart(@(Model.Item1.Product_Id),parseInt($('.numberichUpDown').val()))"><i class="fas fa-credit-card"></i> Mua ngay</button>
+                        <button class="btn btn-info ml-2" onclick="AddProductToCart(@(Model.Item1.Product_Id),parseInt($('.numberichUpDown').val()))"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 detail">
+                <div class="col col-8">
+                    <div class="row mr-4" style="border-bottom: 0.5px solid #4169e1;">
+                        <div class="col col-3" style="background-color: #4169e1;">
+                            <h4 class="m-0 p-1">Mô tả chi tiết</h4>
+                        </div>
+                    </div>
+                    <div class="detail-content mr-4 mt-4" id="demo">
+                        @Html.Raw(Model.Item1.Detail_Description)
+                    </div>
+                </div>
+                <div class="col col-4 p-0">
+                    <div>
+                        <div class="row ml-1 mr-0" style="border-bottom: 0.5px solid #4169e1;">
+                            <div class="col col-12 text-center" style="background-color: #4169e1;">
+                                <h4 class="m-0 p-1 pt-2">Sản phẩm giảm giá</h4>
+                            </div>
+                        </div>
+                        <div class="promotion-product ml-1">
+                            @foreach (var item in Model.Item4)
+                            {
+                                <div class="row ml-1">
+                                    <div class="col col-5 p-0 mt-2">
+                                        <a href="/Home/ProductDetail/@(item.Product_Id)" class="d-block">
+                                            <img src="@("/images/" + item.Product_Images)" height="150" style="max-width: 150px;" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col col-7 pl-1 detail-product mt-4">
+                                        <a href="/Home/ProductDetail/@(item.Product_Id)">@item.Product_Name</a>
+                                        <p class="mt-2 mb-1 new-price">@(String.Format("{0:0,0 vnđ}", (int)item.NewPrice))</p>
+                                        <p class="old-price" style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", (int)item.Price))</p>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                    <div class="tab-ads">
+                        <div class="row ml-1 mr-0" style="border-bottom: 0.5px solid #4169e1;">
+                            <div class="col col-12 text-center" style="background-color: #4169e1;">
+                                <h4 class="m-0 p-1 pt-2">Sản phẩm tương tự</h4>
+                            </div>
+                        </div>
+                        <div class="promotion-product ml-1">
+                            @foreach (var item in Model.Item3)
+                            {
+                                <div class="row ml-1">
+                                    <div class="col col-5 p-0 mt-2">
+                                        <a href="/Home/ProductDetail/@(item.Product_Id)" class="d-block">
+                                            <img src="@("/images/"+ item.Product_Images)" height="150" style="max-width: 150px;" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="col col-7 pl-1 detail-product mt-4">
+                                        <a href="/Home/ProductDetail/@(item.Product_Id)">@item.Product_Name</a>
+                                        @if ((int)item.Price == 0)
+                                        {
+                                            <p class="mt-2 mb-1 new-price">@item.Status</p>
+                                        }
+                                        else
+                                        {
+                                            @if (item.NewPrice != 0)
+                                            {
+                                                <p class="mt-2 mb-1 new-price">@(String.Format("{0:0,0 vnđ}", (int)item.NewPrice))</p>
+                                                <p class="old-price" style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", (int)item.Price))</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="mt-2 mb-1 new-price">@item.Price</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <hr class="ml-2 mr-2">
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/js/jquery-3.5.1.js"></script>
+<script src="~/js/jquery.show-more.js"></script>
+<script>
+    $('#demo').showMore({
+        minheight: 1777,
+        buttontxtmore: "Xem thêm",
+        buttontxtless: "Thu nhỏ lại",
+
+    });
+    //$('#demo2').showMore({
+    //    minheight: 90,
+    //    buttontxtmore: "Xem thêm",
+    //    buttontxtless: "Thu nhỏ lại",
+
+    //});
+    function linkLogin() {
+        $(".linklogin").attr("href", "/Account/Login/15");
+        $(".linkregister").attr("href", "/Account/Login/14");
+    }
+</script>

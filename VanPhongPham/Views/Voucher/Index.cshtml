@@ -1,0 +1,41 @@
+﻿@model IEnumerable<VanPhongPhamDTO.Entities.Voucher>
+
+@{
+    ViewData["Title"] = "Chương trình khuyến mãi";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Thêm mới</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Promotion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Promotion.Promotion_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.Product_Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,39 @@
+﻿@model VanPhongPhamDTO.Entities.Categories
+
+@{
+    ViewData["Title"] = "Sửa danh mục";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <a asp-action="Index">Quay lại trang quản lý</a>
+</div>
+<div class="container-fluid mb-3 mt-3">
+    <div class="card card-warning">
+        <div class="card-header">
+            <h3 class="card-title">Sửa danh mục</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Category_Id" />
+                <div class="form-group">
+                    <label asp-for="Category_Name" class="control-label"></label>
+                    <input asp-for="Category_Name" class="form-control" />
+                    <span asp-validation-for="Category_Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea class="summernote" asp-for="Description"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+

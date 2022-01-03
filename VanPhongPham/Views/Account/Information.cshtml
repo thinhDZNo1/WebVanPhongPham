@@ -1,0 +1,627 @@
+﻿@using Microsoft.AspNetCore.Http
+@using VanPhongPhamDTO.Entities
+@model Tuple<List<Order>, List<OrderDetail>, List<Products>>
+@{
+    ViewData["Title"] = "Quản lý thông tin";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    int id = 0;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="">Quản lý tài khoản</a></li>
+    </ol>
+</nav>
+<section>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-3">
+                <div class="card shadow-sm" style="border-radius: 10px; ">
+                    <div class="cart-header bg-transparent text-center" style="height: 240px;">
+                        <img class="img-profile" src="/images/50820_may_in_nhan_tepra_pro_sr530.png" width="220"
+                             alt="" style="">
+                        <div class="inner">
+                            <input type="file" accept="image/*" name="file" id="file" class="inputfile">
+                            <label for=""><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg></label>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="mb-0" style="font-size: 20px;"><strong class="pr-1 tentk"></strong></p>
+                        <button class="btn btn-outline-primary mt-3" style="width: 220px;" data-toggle="modal" data-target="#my-modal"> Đổi mật khẩu</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9">
+                <div class="card shadow-sm" style="border-radius: 10px; ">
+                    <div class="card-header bg-transparent border-0">
+                        <h3 class="mb-0" style="margin-top: 11px;">
+                            <i class="far fa-clone pr-1"></i>Thông tin tài
+                            khoản
+                        </h3>
+                        <hr>
+                        <div class="row">
+                            <div class="col-11" style="font-size: 18px; padding: 10px 0 0 25px;">
+                                <div class="row">
+                                    <div class="col-3" style="font-weight: bold;">
+                                        <p class="mt-2">Họ Tên: </p>
+                                        <p class="mt-4">Ngày sinh: </p>
+                                        <p class="mt-4">Giới tính: </p>
+                                        <p class="mt-4">Địa chỉ: </p>
+                                        <p class="mt-4">Email: </p>
+                                        <p class="mt-4">Số điện thoại: </p>
+                                    </div>
+                                    <div class="col-9 edit">
+                                        <p id="hoten" class="mt-2">Trần Đức Thịnh</p>
+                                        <p id="ngaysinh" class="mt-4">21/05/2000</p>
+                                        <p id="gioitinh" class="mt-4">nam</p>
+                                        <p id="diachi" class="mt-4">Thanh Hóa</p>
+                                        <p id="gmail" class="mt-4">thinhtran098o@gmail.com</p>
+                                        <p id="sodienthoai" class="mt-4">0857723345</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-1 p-0 changess">
+                                <button class="btn btn-info" onclick="return editaccount(@(Context.Session.GetInt32("userid")));"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="card shadow-sm" style="border-radius: 15px;" id="manage">
+            <div class="card-body dathang">
+                <h4 class="card-title">Tất cả đơn hàng</h4>
+                <hr>
+                <h5>Đơn hàng đang chờ xử lý</h5>
+                @foreach (var item in Model.Item1)
+                {
+                    @if (item.Status.Equals("Đang chờ xử lý"))
+                    {
+
+                        <div class="row mt-4 ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            <div class="col-11 mb-0">
+                                <p>Ngày: @(item.DateOrder.ToString("dd/MM/yyyy")) | Tổng tiền: @(String.Format("{0:0,0 vnđ}", item.Total))</p>
+                            </div>
+                            <div class="col-1 mb-0">
+                                <button class="btn btn-danger mb-3" data-toggle="modal" data-target="#mymodal">Hủy@{id = @item.Order_ID;}</button>
+                                
+                            </div>
+                        </div>
+                        <div class="ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            @foreach (var item2 in Model.Item2)
+                            {
+                                @if (item2.Order_ID == item.Order_ID)
+                                {
+                                    @foreach (var item3 in Model.Item3)
+                                    {
+                                        @if (item3.Product_Id == item2.Product_Id)
+                                        {
+                                            <div class="row pl-3 pb-2">
+                                                <div class="col-2">
+                                                    <img class="images-products" src="@("/images/"+item3.Product_Images)" alt="">
+                                                </div>
+                                                <div class="col-4 pl-0 pr-0">
+                                                    <p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">@item3.Product_Name</p>
+                                                </div>
+                                                <div class="col-2">
+                                                    @if (item3.NewPrice != 0)
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.NewPrice))</p>
+                                                        <p style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                </div>
+                                                <div class="col-1">
+                                                    <p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">@(item2.Amount + " "+ item3.Unit)</p>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            <hr />
+                        </div>
+                    }
+                }
+                <h5 class="mt-4">Đơn hàng đã thanh toán</h5>
+                @foreach (var item in Model.Item1)
+                {
+                    @if (item.Status.Equals("Đơn hàng đã thanh toán"))
+                    {
+
+                        <div class="row mt-4 ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            <div class="col-9 mb-0">
+                                <p>Ngày: @(item.DateOrder.ToString("dd/MM/yyyy")) | Tổng tiền: @(String.Format("{0:0,0 vnđ}", item.Total))</p>
+                            </div>
+                        </div>
+                        <div class="ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            @foreach (var item2 in Model.Item2)
+                            {
+                                @if (item2.Order_ID == item.Order_ID)
+                                {
+                                    @foreach (var item3 in Model.Item3)
+                                    {
+                                        @if (item3.Product_Id == item2.Product_Id)
+                                        {
+                                            <div class="row pl-3 pb-2">
+                                                <div class="col-2">
+                                                    <img class="images-products" src="@("/images/"+item3.Product_Images)" alt="">
+                                                </div>
+                                                <div class="col-4 pl-0 pr-0">
+                                                    <p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">@item3.Product_Name</p>
+                                                </div>
+                                                <div class="col-2">
+                                                    @if (item3.NewPrice != 0)
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.NewPrice))</p>
+                                                        <p style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                </div>
+                                                <div class="col-1">
+                                                    <p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">@(item2.Amount + " "+ item3.Unit)</p>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            <hr />
+                        </div>
+                    }
+                }
+                <h5 class="mt-4">Đơn hàng đã hủy</h5>
+                @foreach (var item in Model.Item1)
+                {
+                    @if (item.Status.Equals("Đã hủy"))
+                    {
+
+                        <div class="row mt-4 ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            <div class="col-9 mb-0">
+                                <p>Ngày: @(item.DateOrder.ToString("dd/MM/yyyy")) | Tổng tiền: @(String.Format("{0:0,0 vnđ}", item.Total))</p>
+                            </div>
+                        </div>
+                        <div class="ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">
+                            @foreach (var item2 in Model.Item2)
+                            {
+                                @if (item2.Order_ID == item.Order_ID)
+                                {
+                                    @foreach (var item3 in Model.Item3)
+                                    {
+                                        @if (item3.Product_Id == item2.Product_Id)
+                                        {
+                                            <div class="row pl-3 pb-2">
+                                                <div class="col-2">
+                                                    <img class="images-products" src="@("/images/"+item3.Product_Images)" alt="">
+                                                </div>
+                                                <div class="col-4 pl-0 pr-0">
+                                                    <p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">@item3.Product_Name</p>
+                                                </div>
+                                                <div class="col-2">
+                                                    @if (item3.NewPrice != 0)
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.NewPrice))</p>
+                                                        <p style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="product-price mb-1" style="color: deeppink; font-size: 18px;">@(String.Format("{0:0,0 vnđ}", item3.Price))</p>
+                                                    }
+                                                </div>
+                                                <div class="col-1">
+                                                    <p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">@(item2.Amount + " "+ item3.Unit)</p>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                }
+                            }
+
+                            <hr />
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Đổi mật khẩu</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="pas" value="@(Context.Session.GetString("pass"))" />
+                    <div class="form-group pb-3">
+                        <label>Mật khẩu cũ: </label>
+                        <input type="password" name="oldpass" id="oldpass" value="" class="form-control inpute oldpass" />
+                        <span class="error"></span>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label>Mật khẩu mới: </label>
+                        <input type="password" name="password" id="password" value="" class="form-control inpute password" />
+                        <span class="error"></span>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label>Nhập lại mật khẩu: </label>
+                        <input type="password" name="passwordCon" id="passwordCon" value="" class="form-control inpute passwordCon" />
+                        <span class="error"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="btnUpdate" onclick="return updatepass(@(Context.Session.GetInt32("userid")));">Thay đổi</button>
+                <button class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="mymodal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Đổi mật khẩu</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="pas" value="@(Context.Session.GetString("pass"))" />
+                    <div class="form-group pb-3">
+                        <label>Lý do bạn hủy: </label>
+                        <div class="md-form amber-textarea active-amber-textarea-2 mb-3">
+                            <textarea id="form16" class="md-textarea form-control" rows="4" cols="42"></textarea>
+                        </div>
+                    </div>                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="return cancel(@id);">Thay đổi</button>
+                <button class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery-3.5.1.js"></script>
+<script>
+    $(document).ready(function () {
+        //loadData();
+        $(".error").css({
+            "color": "#f95959",
+            "font-family": '"Montserrat", sans - serif',
+            "font-size": "12px",
+            "position": "absolute",
+            "display": "block"
+        });
+        $('input').blur(function () {
+            // PassWord
+            if ($('.oldpass').val() !== $('#pas').val()) {
+                $('.oldpass').siblings('.error').text('Mật khẩu cũ không đúng').fadeIn().parent('.form-group').addClass('hasError');
+            } else {
+                $('.oldpass').siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+            }
+            if ($(this).hasClass('password')) {
+                if ($(this).val().length < 8) {
+                    $(this).siblings('span.error').text('Vui lòng đặt mật khẩu ít nhất 8 kí tự').fadeIn().parent('.form-group').addClass('hasError');
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                }
+            }
+
+            // PassWord confirmation
+            if ($('.password').val() !== $('.passwordCon').val()) {
+                $('.passwordCon').siblings('.error').text('Mật khẩu nhập lại không đúng').fadeIn().parent('.form-group').addClass('hasError');
+            } else {
+                $('.passwordCon').siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+            }
+
+
+        });
+    })
+    function loadData() {
+        $.ajax({
+            url: "/Account/Account",//"/Admin/Supplier/List" để này ko cũng đc
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                $(".img-profile").attr("src", '/images/' + result.users.avatar);
+                $("#hoten").text(result.users.first_Name + ' ' + result.users.last_Name);
+                $("#ngaysinh").text(result.users.birthday);
+                $("#gioitinh").text(result.users.sex);
+                $("#diachi").text(result.users.address);
+                $("#gmail").text(result.users.email);
+                $("#phone").text(result.users.phoneNumber);
+                $(".tentk").text(result.users.userName);
+            },
+            error: function (errorMessage) {
+                alert(errorMessage.responseText);
+            }
+        });
+    }
+    $("#file").change(function () {
+        if (window.FormData !== undefined) {
+            var fileUpload = $('#file').get(0);
+            var files = fileUpload.files;
+            //Tạo đối tượng form data
+            var formData = new FormData();
+            //Đưa dữ liệu vào form
+            formData.append('file', files[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/Account/ChangeImages',
+                contentType: false,//Không có header
+                processData: false,//Không xử lý dữ liệu
+                data: formData,
+                success: function (result) {
+                    $(".img-profile").attr("src", result.filess);
+                },
+                error: function (err) {
+                    alert("Có lỗi: " + err.statusText);
+                }
+            })
+        }
+    })
+    function editaccount(id) {
+        $.ajax({
+            url: "/Account/GetID",
+            data: { id: id },
+            type: 'GET',
+            contentType: "application/json;charset=utf-8",
+            success: function (result) {
+                var data = '';
+                data += '<form>';
+                data += '<input type="hidden" name="userid" id="userid" value="' + result.users.user_Id + '" />';
+                data += '<input type="hidden" name="username" id="username" value="' + result.users.userName + '" />';
+                data += '<input type="hidden" name="password" id="password" value="' + result.users.password + '" />';
+                data += '<input type="hidden" name="isActive" id="isActive" value="' + result.users.isActive + '" />';
+                data += '<input type="hidden" name="description" id="description" value="' + result.users.description + '" />';
+                data += '<div class="row">';
+                data += '<div class="col-4">';
+                data += '<div class="form-group">';
+                data += '<input type="text" name="firstname" id="firstname" value="' + result.users.first_Name + '"  class="form-control"/>';
+                data += '</div>';
+                data += '</div>';
+                data += '<div class="col-4">';
+                data += '<div class="form-group">';
+                data += '<input type="text" name="lastname" id="lastname" value="' + result.users.last_Name + '"  class="form-control"/>';
+                data += '</div>';
+                data += '</div>';
+                data += '</div>';
+                data += '<div class="form-group" style="width: 348px;">';
+                data += '<input type="date" name="birthday" id="birthday" value="' + result.date + '"  class="form-control"/>';
+                data += '</div>';
+                data += '<div class="form-group" style="width: 348px;">';
+                data += '<input type="text" name="sex" id="sex" value="' + result.users.sex + '" class="form-control"/>';
+                data += '</div>';
+                data += '<div class="form-group" style="width: 348px;">';
+                data += '<input type="text" name="address" id="address" value="' + result.users.address + '"  class="form-control"/>';
+                data += '</div>';
+                data += '<div class="form-group" style="width: 348px;">';
+                data += '<input type="email" name="email" id="email" value="' + result.users.email + '"  class="form-control" />';
+                data += '</div>';
+                data += '<div class="form-group" style="width: 348px;">';
+                data += '<input type="tel" name="phone" id="phone" value="' + result.users.phoneNumber + '" class="form-control" />';
+                data += '</div>';
+                data += '</form>';
+                $(".edit").html(data);
+                var ch = '';
+                ch += '<button class="btn btn-success mb-3" onclick="return save();"><i class="far fa-save"></i></button>';
+                ch += '<button class="btn btn-warning" onclick="return cancel();"><i class="far fa-window-close"></i></i></button>';
+                $(".changess").html(ch);
+            }
+        })
+    }
+    function save() {
+        var json = {
+            User_Id: $("#userid").val(),
+            UserName: $("#username").val(),
+            Password: $("#password").val(),
+            isActive: $("#isActive").val(),
+            Description: $("#description").val(),
+            First_Name: $("#firstname").val(),
+            Last_Name: $("#lastname").val(),
+            Birthday: $("#birthday").val(),
+            Sex: $("#sex").val(),
+            Address: $("#address").val(),
+            Email: $("#email").val(),
+            PhoneNumber: $("#phone").val()
+        };
+        $.ajax({
+            url: "/Account/Update",
+            data: JSON.stringify(json),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            type: "POST",
+            success: function (result) {
+                var data = '';
+                data += '<p id="hoten" class="mt-2">' + result.users.first_Name + ' ' + result.users.last_Name + '</p>';
+                data += '<p id="ngaysinh" class="mt-4">' + result.date + '</p>';
+                data += '<p id="gioitinh" class="mt-4">' + result.users.sex + '</p>';
+                data += '<p id="diachi" class="mt-4">' + result.users.address + '</p>';
+                data += '<p id="gmail" class="mt-4">' + result.users.email + '</p>';
+                data += '<p id="sodienthoai" class="mt-4">' + result.users.phoneNumber + '</p>';
+                $(".edit").html(data);
+                $(".changess").html('<button class="btn btn-info" onclick="return editaccount(' + result.users.user_Id + ');"><i class="fas fa-edit"></i></button>');
+            },
+            error: function (errorMessage) {
+                alert(errorMessage.responseText);
+            }
+        })
+    }
+    function cancel() {
+        $.ajax({
+            url: "/Account/Account",//"/Admin/Supplier/List" để này ko cũng đc
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var data = '';
+                data += '<p id="hoten" class="mt-2">' + result.users.first_Name + ' ' + result.users.last_Name + '</p>';
+                data += '<p id="ngaysinh" class="mt-4">' + result.users.birthday + '</p>';
+                data += '<p id="gioitinh" class="mt-4">' + result.users.sex + '</p>';
+                data += '<p id="diachi" class="mt-4">' + result.users.address + '</p>';
+                data += '<p id="gmail" class="mt-4">' + result.users.email + '</p>';
+                data += '<p id="sodienthoai" class="mt-4">' + result.users.phoneNumber + '</p>';
+                $(".edit").html(data);
+                $(".changess").html('<button class="btn btn-info" onclick="return editaccount(' + result.users.user_Id + ');"><i class="fas fa-edit"></i></button>');
+            },
+            error: function (errorMessage) {
+                alert(errorMessage.responseText);
+            }
+        });
+    }
+    function updatepass(id) {
+        var p = $("#pas").val();
+        var oldpass = $("#oldpass").val();
+        var newpass = $("#password").val();
+        var pass = $("#passwordCon").val();
+        if (p == oldpass) {
+            $.ajax({
+                url: '/Account/ChangedPass',
+                type: 'POST',
+                data: { id: id, oldpass: oldpass, newpass: newpass, pass: pass },
+                success: function (result) {
+                    alert("Đỗi mật khẩu thành công!");
+                    $("#my-modal").modal("hide");
+                }
+            })
+        }
+    }
+    function cancel(id) {
+        var note = $("#ghichu").text();
+        if (confirm("Bạn có chắc chắn muốn hủy?")) {
+            $.ajax({
+                url: '/Cart/Cancel',
+                type: 'POST',
+                data: { id: id, note:note },
+                success: function (result) {
+                    window.location.href = result.path;
+                }
+            })
+        }
+    }
+        //function loadHeader() {
+    //    $.ajax({
+    //        url: "/Cart/ListOrder",//"/Admin/Supplier/List" để này ko cũng đc
+    //        type: "GET",
+    //        contentType: "application/json;charset=utf-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            var data = '';
+    //            $.each(result, function (key, item) {
+    //                data += '<div class="row mt-4 ml-3 mr-3" style="border-bottom: 1px solid rgb(56, 56, 56);">';
+    //                data += '<div class="col-9 mb-0">';
+    //                data += '<p>Ngày: ' + item.dateOrder + ' | Tổng tiền: ' + item.total + '</p>';
+    //                data += '</div>';
+    //                data += '</div>';
+    //                if (item.status == 'Đang chờ xử lý') {
+    //                    data += '<div class="ml-3 mr-3 sanpham1" style="border-bottom: 1px solid rgb(56, 56, 56);">';
+    //                }
+    //                data += '</div>';
+    //            })
+    //            $("dathang").html(data);
+    //        },
+    //        error: function (errorMessage) {
+    //            alert(errorMessage.responseText);
+    //        }
+    //    });
+    //}
+    //function loadsanpham() {
+    //    $.ajax({
+    //        url: "/Cart/ListOrder",//"/Admin/Supplier/List" để này ko cũng đc
+    //        type: "GET",
+    //        contentType: "application/json;charset=utf-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            var data = '';
+    //            var data1 = '';
+    //            var data2 = '';
+    //            $.each(result, function (key, item) {
+    //                if (item.status == 'Đang chờ xử lý') {
+    //                    data += '<div class="row pl-3">';
+    //                    data += '<div class="col-2">';
+    //                    data += '<img class="images-products" src="/images/' + item.product_Images + '" alt="">';
+    //                    data += '</div>';
+    //                    data += '<div class="col-4 pl-0 pr-0">';
+    //                    data += '<p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">' + item.product_Name + '</p>';
+    //                    data += '</div>';
+    //                    data += '<div class="col-2">';
+    //                    if (item.newPrice != 0) {
+    //                        data += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.newPrice.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                        data += '<p style="color: deeppink;text-decoration:line-thought;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    } else {
+    //                        data += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    }
+    //                    data += '</div>';
+    //                    data += '<div class="col-1">';
+    //                    data += '<p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">' + item.amount + item.unit + '</p>';
+    //                    data += '</div>';
+    //                    data += '</div>';
+    //                } else if (item.status == 'Đã hoàn thành') {
+    //                    data1 += '<div class="row pl-3">';
+    //                    data1 += '<div class="col-2">';
+    //                    data1 += '<img class="images-products" src="/images/' + item.product_Images + '" alt="">';
+    //                    data1 += '</div>';
+    //                    data1 += '<div class="col-4 pl-0 pr-0">';
+    //                    data1 += '<p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">' + item.product_Name + '</p>';
+    //                    data1 += '</div>';
+    //                    data1 += '<div class="col-2">';
+    //                    if (item.newPrice != 0) {
+    //                        data1 += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.newPrice.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                        data1 += '<p style="color: deeppink;text-decoration:line-thought;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    } else {
+    //                        data1 += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    }
+    //                    data1 += '</div>';
+    //                    data1 += '<div class="col-1">';
+    //                    data1 += '<p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">' + item.amount + item.unit + '</p>';
+    //                    data1 += '</div>';
+    //                    data1 += '</div>';
+    //                } if (item.status == 'đã hủy') {
+    //                    data2 += '<div class="row pl-3">';
+    //                    data2 += '<div class="col-2">';
+    //                    data2 += '<img class="images-products" src="/images/' + item.product_Images + '" alt="">';
+    //                    data2 += '</div>';
+    //                    data2 += '<div class="col-4 pl-0 pr-0">';
+    //                    data2 += '<p class="product-name pl-4 pt-3" style="font-size: 20px; width: 100%; color: #1561d3;">' + item.product_Name + '</p>';
+    //                    data2 += '</div>';
+    //                    data2 += '<div class="col-2">';
+    //                    if (item.newPrice != 0) {
+    //                        data2 += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.newPrice.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                        data2 += '<p style="color: deeppink;text-decoration:line-thought;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    } else {
+    //                        data2 += '<p class="product-price mb-1" style="color: deeppink; font-size: 18px;">' + item.price.toLocaleString('it-IT', { style: 'currency', currency: 'vnđ' }) + '</p>';
+    //                    }
+    //                    data2 += '</div>';
+    //                    data2 += '<div class="col-1">';
+    //                    data2 += '<p class="pt-4 mb-1" style="font-size: 20px; width: 100%;">' + item.amount + item.unit + '</p>';
+    //                    data2 += '</div>';
+    //                    data2 += '</div>';
+    //                }
+    //            })
+    //            $("dathang").html(data);
+    //        },
+    //        error: function (errorMessage) {
+    //            alert(errorMessage.responseText);
+    //        }
+    //    });
+    //}
+</script>

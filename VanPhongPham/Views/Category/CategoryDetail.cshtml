@@ -1,0 +1,131 @@
+﻿@using VanPhongPhamDTO.Entities
+@model Tuple<Category_Detail, List<Products>>
+@using VanPhongPhamDTO.EntityFramework
+@{
+    ViewData["Title"] = Model.Item1.CD_Name;
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    VanPhongPhamContext db = new VanPhongPhamContext();
+    var category = db.Categories.SingleOrDefault(x => x.Category_Id == Model.Item1.Category_Id);
+    var cate = db.Categories.ToList();
+    var cateDetail = db.Category_Detail.ToList();
+    var product = (from cd in db.Category_Detail
+                   join p in db.Products on cd.CD_Id equals p.CD_Id
+                   where cd.CD_Id == Model.Item1.CD_Id
+                   select p).ToList();
+    int so = product.Count();
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home/Index">Trang chủ</a></li>
+        <li class="breadcrumb-item"><a href="/Category/Category/@(Model.Item1.Category_Id)">@category.Category_Name</a></li>
+        <li class="breadcrumb-item"><a href="/Category/CategoryDetail/@(Model.Item1.CD_Id)">@Model.Item1.CD_Name</a></li>
+    </ol>
+</nav>
+<section>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-9">
+                <div class="container-fluid" style="background-color: white;">
+                    <div class="row p-0" style="border-bottom: 0.1px solid #5072da;">
+                        <div class="col-3 text-center" style="background-color: #5072da; color: white; border-top-left-radius: 10px;">
+                            <h3 class="p-0 pt-3" style="font-weight: bold; font-size: 18px;">@Model.Item1.CD_Name.ToUpper()</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-new-product">
+                    <div class="container" style="background-color: #e8e8e8;">
+                        <h3 class="text-center"></h3>
+                        @if (so > 0)
+                        {
+                            <div class="row" id="exam">
+                                @foreach (var p in product)
+                                {
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 show_button pag">
+                                        <div class="thumbnail">
+                                            <a href="@Url.Action("ProductDetail", "Home", new { id =  p.Product_Id })"> <img src="@("/images/" + p.Product_Images)" alt=""></a>
+                                            <div class="chon-mua">
+                                                <button class="btn btn-info btn-block" onclick="location.href='@Url.Action("ProductDetail", "Home", new { id =  p.Product_Id }) '">Xem chi tiết</button>
+                                                <button class="btn btn-info btn-block" onclick="AddToCart('@(p.Product_Id)')">Thêm giỏ hàng</button>
+                                            </div>
+                                            <div class="caption">
+                                                <div class="proName mb-1" style="height: 70px;">@p.Product_Name</div>
+                                                <div class="proPrice">
+                                                    @if ((int)p.Price == 0)
+                                                    {
+                                                        <span class="proOfPrice" style="text-decoration: none;">@p.Status</span>}
+                                                    else
+                                                    {
+                                                        @if (p.NewPrice != 0)
+                                                        {
+                                                            <span class="proOfPrice" style="text-decoration: line-through;">@(String.Format("{0:0,0 vnđ}", (int)p.Price))</span>
+                                                            <span class="proPriceDiscount">@(String.Format("{0:0,0 vnđ}", (int)p.NewPrice))</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="proOfPrice" style="text-decoration: none;">@(String.Format("{0:0,0 vnđ}", (int)p.Price))</span>
+                                                        }
+                                                    }
+                                                </div>
+                                                @foreach (var item in Model.Item2)
+                                                {
+                                                    @if (item.Product_Id == p.Product_Id)
+                                                    {
+                                                        <img src="/images/new2.png" alt="" class="inew">
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex">
+                                <h4 class="mx-auto pb-4">Chưa có sản phẩm nào :((</h4>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row p-0 mr-2">
+                    <div class="col-12 text-center danhmuc">
+                        <h3 class="p-0 pt-2" style="font-weight: bold; font-size: 18px;">DANH MỤC</h3>
+                    </div>
+                    <div class="col-12 submenu m-0 p-0">
+                        <ul class="ngoai">
+                            @foreach (var item in cate)
+                            {
+                                <li class="tro">
+                                    <a href="/Category/Category/@(item.Category_Id)"> @item.Category_Name <i class="fas fa-caret-down benphai"></i> </a>
+                                    <ul class="trong">
+                                        @foreach (var cd in cateDetail)
+                                        {
+                                            @if (item.Category_Id == cd.Category_Id)
+                                            {
+                                                <li><a href="/Category/CategoryDetail/@(cd.CD_Id)"><i class="fas fa-caret-right"></i><span>@cd.CD_Name</span></a></li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function linkLogin() {
+        $(".linklogin").attr("href", "/Account/Login/5");
+        $(".linkregister").attr("href", "/Account/Login/6");
+    }
+</script>
+
+
